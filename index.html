@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="description" content="Ultimate Leveling OS+ - Sistem Produktivitas dengan Gamifikasi RPG">
+    <title>Ultimate Leveling OS+ | Life RPG System</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing Ultimate Leveling OS+</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar" id="loading-progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen" style="display: none;">
+        <div class="login-card">
+            <div class="login-icon">🎮</div>
+            <h2>ULTIMATE LEVELING OS+</h2>
+            <p class="login-subtitle">Life RPG System</p>
+            <div class="login-form">
+                <input type="text" id="login-username" placeholder="Username" autocomplete="off">
+                <input type="password" id="login-password" placeholder="Password">
+                <button id="login-btn" class="btn btn-primary">Login / Register</button>
+                <button id="guest-btn" class="btn">Guest Mode</button>
+            </div>
+            <div class="login-note">
+                <small>Data akan tersimpan secara lokal di perangkat Anda</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🎮</div>
+                <div class="logo-text">
+                    <span>ULTIMATE</span>
+                    <span class="logo-accent">LEVELING</span>
+                    <span>OS+</span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge gold-badge">
+                    <span>💰</span>
+                    <span id="header-gold">0</span>
+                </div>
+                <div class="stat-badge streak-badge">
+                    <span>🔥</span>
+                    <span id="header-streak">0</span>
+                </div>
+                <div class="stat-badge level-badge">
+                    <span>⭐</span>
+                    <span id="header-level">1</span>
+                </div>
+                <button id="logout-btn" class="logout-btn">🚪</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-bar">
+            <button class="nav-btn" data-page="dashboard"><span>📊</span><span>Dashboard</span></button>
+            <button class="nav-btn" data-page="quests"><span>⚔️</span><span>Quests</span></button>
+            <button class="nav-btn" data-page="schedule"><span>📅</span><span>Schedule</span></button>
+            <button class="nav-btn" data-page="shop"><span>🛒</span><span>Shop</span></button>
+            <button class="nav-btn" data-page="stats"><span>📈</span><span>Stats</span></button>
+            <button class="nav-btn" data-page="finance"><span>💰</span><span>Finance</span></button>
+            <button class="nav-btn" data-page="inventory"><span>🎒</span><span>Inventory</span></button>
+            <button class="nav-btn" data-page="notes"><span>🧠</span><span>Notes</span></button>
+            <button class="nav-btn" data-page="alarm"><span>⏰</span><span>Alarm</span></button>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="app-content" class="main-content"></main>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <audio id="alarm-sound" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
