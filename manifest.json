@@ -1,16 +1,21 @@
 {
-    "name": "Ultimate Leveling OS+",
-    "short_name": "LevelingOS",
-    "description": "Sistem Produktivitas dengan Gamifikasi RPG",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0a0a0f",
-    "theme_color": "#a855f7",
-    "icons": [
-        {
-            "src": "icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        }
-    ]
+  "name": "Zeta RPG - Level Up Your Life",
+  "short_name": "Zeta RPG",
+  "description": "Gamified productivity app to level up your real life",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0a0f1a",
+  "background_color": "#0a0f1a",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

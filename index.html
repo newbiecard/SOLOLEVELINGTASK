@@ -1,94 +1,172 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0a0f">
-    <meta name="description" content="Ultimate Leveling OS+ - Sistem Produktivitas dengan Gamifikasi RPG">
-    <title>Ultimate Leveling OS+ | Life RPG System</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f1a">
+  <title>Zeta RPG - Level Up Your Life</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Initializing Ultimate Leveling OS+</div>
-        <div class="loading-progress">
-            <div class="loading-progress-bar" id="loading-progress-bar"></div>
+<body class="dark-rpg">
+  <div id="app">
+    <!-- Login/Register Container -->
+    <div id="auth-container" class="container auth-container">
+      <div class="logo-container">
+        <div class="rpg-logo">⚔️ ZETA RPG ⚔️</div>
+        <p class="tagline">Level Up Your Life, Warrior!</p>
+      </div>
+      <div class="auth-form">
+        <input type="email" id="email" placeholder="Email Warrior" class="rpg-input">
+        <input type="password" id="password" placeholder="Password" class="rpg-input">
+        <div class="auth-buttons">
+          <button id="login-btn" class="rpg-btn primary">⚡ Login</button>
+          <button id="register-btn" class="rpg-btn secondary">✨ Register</button>
         </div>
+      </div>
     </div>
 
-    <!-- Login Screen -->
-    <div id="login-screen" class="login-screen" style="display: none;">
-        <div class="login-card">
-            <div class="login-icon">🎮</div>
-            <h2>ULTIMATE LEVELING OS+</h2>
-            <p class="login-subtitle">Life RPG System</p>
-            <div class="login-form">
-                <input type="text" id="login-username" placeholder="Username" autocomplete="off">
-                <input type="password" id="login-password" placeholder="Password">
-                <button id="login-btn" class="btn btn-primary">Login / Register</button>
-                <button id="guest-btn" class="btn">Guest Mode</button>
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+      <!-- Header with Character Stats -->
+      <div class="character-header">
+        <div class="avatar">🎮</div>
+        <div class="level-info">
+          <h2>Level <span id="level">1</span></h2>
+          <div class="exp-container">
+            <div class="exp-bar-container">
+              <div id="exp-bar" class="exp-bar"></div>
             </div>
-            <div class="login-note">
-                <small>Data akan tersimpan secara lokal di perangkat Anda</small>
-            </div>
+            <span id="exp-text">0/100 EXP</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Abilities Grid -->
+      <div class="abilities-section">
+        <h3>📊 STATS</h3>
+        <div class="abilities-grid">
+          <div class="ability-card">
+            <div class="ability-icon">📚</div>
+            <div class="ability-info">
+              <span>Knowledge</span>
+              <div class="ability-bar-container">
+                <div id="knowledge-bar" class="ability-bar"></div>
+              </div>
+              <span id="knowledge-value">0%</span>
+            </div>
+          </div>
+          <div class="ability-card">
+            <div class="ability-icon">💪</div>
+            <div class="ability-info">
+              <span>Strength</span>
+              <div class="ability-bar-container">
+                <div id="strength-bar" class="ability-bar"></div>
+              </div>
+              <span id="strength-value">0%</span>
+            </div>
+          </div>
+          <div class="ability-card">
+            <div class="ability-icon">💰</div>
+            <div class="ability-info">
+              <span>Wealth</span>
+              <div class="ability-bar-container">
+                <div id="wealth-bar" class="ability-bar"></div>
+              </div>
+              <span id="wealth-value">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Quests -->
+      <div class="tasks-section">
+        <div class="section-header">
+          <h3>📋 TODAY'S QUESTS</h3>
+          <button id="add-task-btn" class="icon-btn">+ Add Quest</button>
+        </div>
+        <div id="task-list" class="task-list"></div>
+      </div>
+
+      <!-- Finance Section -->
+      <div class="finance-section">
+        <div class="section-header">
+          <h3>💰 TREASURY</h3>
+          <button id="add-transaction-btn" class="icon-btn">+ Record</button>
+        </div>
+        <div class="balance-card">
+          <span>Current Balance</span>
+          <span id="balance" class="balance-amount">0 GP</span>
+        </div>
+        <div id="transaction-list" class="transaction-list"></div>
+      </div>
+
+      <!-- Punishment History -->
+      <div class="punishment-section">
+        <h3>⚠️ PUNISHMENT LOG</h3>
+        <div id="punishment-list" class="punishment-list"></div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="danger-zone">
+        <button id="reset-btn" class="rpg-btn danger">💀 RESET CHARACTER 💀</button>
+        <button id="logout-btn" class="rpg-btn secondary">🚪 Logout</button>
+      </div>
     </div>
 
-    <!-- Main App -->
-    <div class="app-container" id="app-container" style="display: none;">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <div class="logo-icon">🎮</div>
-                <div class="logo-text">
-                    <span>ULTIMATE</span>
-                    <span class="logo-accent">LEVELING</span>
-                    <span>OS+</span>
-                </div>
-            </div>
-            <div class="header-stats">
-                <div class="stat-badge gold-badge">
-                    <span>💰</span>
-                    <span id="header-gold">0</span>
-                </div>
-                <div class="stat-badge streak-badge">
-                    <span>🔥</span>
-                    <span id="header-streak">0</span>
-                </div>
-                <div class="stat-badge level-badge">
-                    <span>⭐</span>
-                    <span id="header-level">1</span>
-                </div>
-                <button id="logout-btn" class="logout-btn">🚪</button>
-            </div>
-        </header>
-
-        <!-- Navigation -->
-        <nav class="nav-bar">
-            <button class="nav-btn" data-page="dashboard"><span>📊</span><span>Dashboard</span></button>
-            <button class="nav-btn" data-page="quests"><span>⚔️</span><span>Quests</span></button>
-            <button class="nav-btn" data-page="schedule"><span>📅</span><span>Schedule</span></button>
-            <button class="nav-btn" data-page="shop"><span>🛒</span><span>Shop</span></button>
-            <button class="nav-btn" data-page="stats"><span>📈</span><span>Stats</span></button>
-            <button class="nav-btn" data-page="finance"><span>💰</span><span>Finance</span></button>
-            <button class="nav-btn" data-page="inventory"><span>🎒</span><span>Inventory</span></button>
-            <button class="nav-btn" data-page="notes"><span>🧠</span><span>Notes</span></button>
-            <button class="nav-btn" data-page="alarm"><span>⏰</span><span>Alarm</span></button>
-        </nav>
-
-        <!-- Main Content -->
-        <main id="app-content" class="main-content"></main>
-
-        <!-- Toast Container -->
-        <div id="toast-container" class="toast-container"></div>
+    <!-- Modal Tambah Task -->
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>⚔️ New Quest</h3>
+        <input type="text" id="task-title" placeholder="Quest Title" class="rpg-input">
+        <textarea id="task-desc" placeholder="Description" class="rpg-input"></textarea>
+        <input type="date" id="task-date" class="rpg-input">
+        <input type="time" id="task-time" class="rpg-input">
+        <select id="task-category" class="rpg-input">
+          <option value="study">📚 Study</option>
+          <option value="exercise">💪 Exercise</option>
+          <option value="work">💼 Work</option>
+          <option value="other">🎯 Other</option>
+        </select>
+        <input type="number" id="task-exp" placeholder="EXP Reward (10-100)" class="rpg-input">
+        <input type="text" id="task-punishment" placeholder="Punishment if failed" class="rpg-input">
+        <div class="modal-buttons">
+          <button id="save-task-btn" class="rpg-btn primary">Save Quest</button>
+          <button id="close-modal-btn" class="rpg-btn secondary">Cancel</button>
+        </div>
+      </div>
     </div>
 
-    <audio id="alarm-sound" preload="auto"></audio>
+    <!-- Modal Tambah Transaksi -->
+    <div id="transaction-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>💰 Record Transaction</h3>
+        <select id="transaction-type" class="rpg-input">
+          <option value="income">💵 Income</option>
+          <option value="expense">💸 Expense</option>
+        </select>
+        <input type="number" id="transaction-amount" placeholder="Amount (GP)" class="rpg-input">
+        <input type="text" id="transaction-desc" placeholder="Description" class="rpg-input">
+        <div class="modal-buttons">
+          <button id="save-transaction-btn" class="rpg-btn primary">Save</button>
+          <button id="close-transaction-modal-btn" class="rpg-btn secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+  
+  <script src="firebase-config.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

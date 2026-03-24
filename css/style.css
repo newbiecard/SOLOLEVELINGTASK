@@ -1,0 +1,483 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.dark-rpg {
+  background: linear-gradient(135deg, #0a0f1a 0%, #0c1220 100%);
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Typography */
+h1, h2, h3, .rpg-logo {
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 1px;
+}
+
+.rpg-logo {
+  font-size: 2rem;
+  text-shadow: 0 0 10px #a855f7, 0 0 20px #3b82f6;
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  color: #8b9dc3;
+  font-size: 0.8rem;
+}
+
+/* Container */
+.container, .dashboard {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.auth-container {
+  text-align: center;
+  padding: 40px;
+  background: rgba(17, 22, 31, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Inputs */
+.rpg-input {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: #1a1f2e;
+  border: 2px solid #2d3748;
+  border-radius: 12px;
+  color: #e0e0e0;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.rpg-input:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+/* Buttons */
+.rpg-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  margin: 5px;
+}
+
+.rpg-btn.primary {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: white;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.rpg-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.rpg-btn.secondary {
+  background: #2d3748;
+  color: #e0e0e0;
+}
+
+.rpg-btn.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.icon-btn {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Character Header */
+.character-header {
+  background: linear-gradient(135deg, #1a1f2e, #0f1420);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.avatar {
+  font-size: 4rem;
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-info {
+  flex: 1;
+}
+
+.level-info h2 {
+  margin-bottom: 10px;
+}
+
+.exp-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exp-bar-container {
+  flex: 1;
+  height: 12px;
+  background: #2d3748;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.exp-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+/* Abilities */
+.abilities-section {
+  background: #11161f;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #2d3748;
+}
+
+.abilities-grid {
+  display: grid;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.ability-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #1a1f2e;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.ability-icon {
+  font-size: 1.5rem;
+}
+
+.ability-info {
+  flex: 1;
+}
+
+.ability-bar-container {
+  height: 8px;
+  background: #2d3748;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+.ability-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+/* Tasks */
+.tasks-section {
+  background: #11161f;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-card {
+  background: #1a1f2e;
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 4px solid #a855f7;
+  transition: all 0.3s ease;
+}
+
+.task-card.completed {
+  border-left-color: #22c55e;
+  opacity: 0.7;
+}
+
+.task-card.missed {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.task-exp {
+  color: #a855f7;
+  font-size: 0.8rem;
+}
+
+.task-desc {
+  color: #8b9dc3;
+  font-size: 0.8rem;
+  margin: 5px 0;
+}
+
+.task-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.task-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.complete-btn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Finance */
+.finance-section {
+  background: #11161f;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.balance-amount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fbbf24;
+  display: block;
+  margin-top: 10px;
+}
+
+.transaction-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #2d3748;
+}
+
+.transaction-income {
+  color: #22c55e;
+}
+
+.transaction-expense {
+  color: #ef4444;
+}
+
+/* Punishment */
+.punishment-section {
+  background: #11161f;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.punishment-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.punishment-item {
+  background: rgba(239, 68, 68, 0.1);
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+/* Danger Zone */
+.danger-zone {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #2d3748;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: #1a1f2e;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  border: 1px solid #a855f7;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1f2e;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border-left: 4px solid #a855f7;
+  z-index: 2000;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Level Up Animation */
+@keyframes levelUp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    text-shadow: 0 0 20px #a855f7, 0 0 40px #3b82f6;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.level-up-animation {
+  animation: levelUp 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  body.dark-rpg {
+    padding: 10px;
+  }
+  
+  .character-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .danger-zone {
+    flex-direction: column;
+  }
+  
+  .abilities-grid {
+    gap: 10px;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1f2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 10px;
+}
