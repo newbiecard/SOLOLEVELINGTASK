@@ -1,172 +1,464 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0f1a">
-  <title>Zeta RPG - Level Up Your Life</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeta RPG - Life Productivity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0f1a 0%, #0c1220 100%);
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #11161f;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #a855f7;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+            text-align: center;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1a1f2e;
+            border: 2px solid #2d3748;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .logout {
+            background: #ef4444;
+            margin-top: 20px;
+        }
+        
+        .stats {
+            background: #1a1f2e;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            background: #2d3748;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        #exp-bar, #knowledge-bar, #strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        #exp-bar { background: linear-gradient(90deg, #a855f7, #3b82f6); }
+        #knowledge-bar { background: #a855f7; }
+        #strength-bar { background: #3b82f6; }
+        
+        .task-card {
+            background: #1a1f2e;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #a855f7;
+            text-align: left;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1f2e;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border-left: 4px solid #a855f7;
+            z-index: 1000;
+        }
+        
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        .info { color: #a855f7; }
+        
+        .task-meta {
+            font-size: 12px;
+            color: #8b9dc3;
+            margin-top: 5px;
+        }
+        
+        .complete-btn {
+            background: #22c55e;
+            padding: 5px 10px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+    </style>
 </head>
-<body class="dark-rpg">
-  <div id="app">
-    <!-- Login/Register Container -->
-    <div id="auth-container" class="container auth-container">
-      <div class="logo-container">
-        <div class="rpg-logo">⚔️ ZETA RPG ⚔️</div>
-        <p class="tagline">Level Up Your Life, Warrior!</p>
-      </div>
-      <div class="auth-form">
-        <input type="email" id="email" placeholder="Email Warrior" class="rpg-input">
-        <input type="password" id="password" placeholder="Password" class="rpg-input">
-        <div class="auth-buttons">
-          <button id="login-btn" class="rpg-btn primary">⚡ Login</button>
-          <button id="register-btn" class="rpg-btn secondary">✨ Register</button>
+<body>
+    <div id="app">
+        <!-- LOGIN CONTAINER -->
+        <div id="auth-container" class="container">
+            <h1>⚔️ ZETA RPG ⚔️</h1>
+            <p>Level Up Your Life, Warrior!</p>
+            <input type="email" id="email" placeholder="Email Warrior">
+            <input type="password" id="password" placeholder="Password">
+            <div>
+                <button id="login-btn">⚡ LOGIN</button>
+                <button id="register-btn">✨ REGISTER</button>
+            </div>
+            <div id="auth-message" style="margin-top: 10px; font-size: 12px;"></div>
         </div>
-      </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="container hidden">
+            <h2>Level: <span id="level">1</span></h2>
+            <div class="progress-bar">
+                <div id="exp-bar"></div>
+            </div>
+            <p>EXP: <span id="exp">0</span> / 100</p>
+            
+            <div class="stats">
+                <h3>📚 Knowledge: <span id="knowledge">0</span>%</h3>
+                <div class="progress-bar"><div id="knowledge-bar"></div></div>
+                <h3>💪 Strength: <span id="strength">0</span>%</h3>
+                <div class="progress-bar"><div id="strength-bar"></div></div>
+            </div>
+            
+            <div>
+                <h3>📋 Today's Quests</h3>
+                <button id="add-task-btn">+ Add Quest</button>
+                <div id="task-list"></div>
+            </div>
+            
+            <button id="logout-btn" class="logout">🚪 Logout</button>
+        </div>
     </div>
 
-    <!-- Main Dashboard -->
-    <div id="dashboard" class="dashboard hidden">
-      <!-- Header with Character Stats -->
-      <div class="character-header">
-        <div class="avatar">🎮</div>
-        <div class="level-info">
-          <h2>Level <span id="level">1</span></h2>
-          <div class="exp-container">
-            <div class="exp-bar-container">
-              <div id="exp-bar" class="exp-bar"></div>
-            </div>
-            <span id="exp-text">0/100 EXP</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Abilities Grid -->
-      <div class="abilities-section">
-        <h3>📊 STATS</h3>
-        <div class="abilities-grid">
-          <div class="ability-card">
-            <div class="ability-icon">📚</div>
-            <div class="ability-info">
-              <span>Knowledge</span>
-              <div class="ability-bar-container">
-                <div id="knowledge-bar" class="ability-bar"></div>
-              </div>
-              <span id="knowledge-value">0%</span>
-            </div>
-          </div>
-          <div class="ability-card">
-            <div class="ability-icon">💪</div>
-            <div class="ability-info">
-              <span>Strength</span>
-              <div class="ability-bar-container">
-                <div id="strength-bar" class="ability-bar"></div>
-              </div>
-              <span id="strength-value">0%</span>
-            </div>
-          </div>
-          <div class="ability-card">
-            <div class="ability-icon">💰</div>
-            <div class="ability-info">
-              <span>Wealth</span>
-              <div class="ability-bar-container">
-                <div id="wealth-bar" class="ability-bar"></div>
-              </div>
-              <span id="wealth-value">0%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Today's Quests -->
-      <div class="tasks-section">
-        <div class="section-header">
-          <h3>📋 TODAY'S QUESTS</h3>
-          <button id="add-task-btn" class="icon-btn">+ Add Quest</button>
-        </div>
-        <div id="task-list" class="task-list"></div>
-      </div>
-
-      <!-- Finance Section -->
-      <div class="finance-section">
-        <div class="section-header">
-          <h3>💰 TREASURY</h3>
-          <button id="add-transaction-btn" class="icon-btn">+ Record</button>
-        </div>
-        <div class="balance-card">
-          <span>Current Balance</span>
-          <span id="balance" class="balance-amount">0 GP</span>
-        </div>
-        <div id="transaction-list" class="transaction-list"></div>
-      </div>
-
-      <!-- Punishment History -->
-      <div class="punishment-section">
-        <h3>⚠️ PUNISHMENT LOG</h3>
-        <div id="punishment-list" class="punishment-list"></div>
-      </div>
-
-      <!-- Danger Zone -->
-      <div class="danger-zone">
-        <button id="reset-btn" class="rpg-btn danger">💀 RESET CHARACTER 💀</button>
-        <button id="logout-btn" class="rpg-btn secondary">🚪 Logout</button>
-      </div>
-    </div>
-
-    <!-- Modal Tambah Task -->
-    <div id="task-modal" class="modal hidden">
-      <div class="modal-content">
-        <h3>⚔️ New Quest</h3>
-        <input type="text" id="task-title" placeholder="Quest Title" class="rpg-input">
-        <textarea id="task-desc" placeholder="Description" class="rpg-input"></textarea>
-        <input type="date" id="task-date" class="rpg-input">
-        <input type="time" id="task-time" class="rpg-input">
-        <select id="task-category" class="rpg-input">
-          <option value="study">📚 Study</option>
-          <option value="exercise">💪 Exercise</option>
-          <option value="work">💼 Work</option>
-          <option value="other">🎯 Other</option>
-        </select>
-        <input type="number" id="task-exp" placeholder="EXP Reward (10-100)" class="rpg-input">
-        <input type="text" id="task-punishment" placeholder="Punishment if failed" class="rpg-input">
-        <div class="modal-buttons">
-          <button id="save-task-btn" class="rpg-btn primary">Save Quest</button>
-          <button id="close-modal-btn" class="rpg-btn secondary">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Tambah Transaksi -->
-    <div id="transaction-modal" class="modal hidden">
-      <div class="modal-content">
-        <h3>💰 Record Transaction</h3>
-        <select id="transaction-type" class="rpg-input">
-          <option value="income">💵 Income</option>
-          <option value="expense">💸 Expense</option>
-        </select>
-        <input type="number" id="transaction-amount" placeholder="Amount (GP)" class="rpg-input">
-        <input type="text" id="transaction-desc" placeholder="Description" class="rpg-input">
-        <div class="modal-buttons">
-          <button id="save-transaction-btn" class="rpg-btn primary">Save</button>
-          <button id="close-transaction-modal-btn" class="rpg-btn secondary">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Toast Notification -->
     <div id="toast" class="toast hidden"></div>
-  </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
-  
-  <script src="firebase-config.js"></script>
-  <script type="module" src="js/app.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // ============================================================
+        // 🔥🔥🔥 GANTI DENGAN CONFIG FIREBASE ASLI LO 🔥🔥🔥
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0XgXxXxXxXxXxXxXxXxXxXxXxXx",  // <-- GANTI INI!
+            authDomain: "zeta-rpg-12345.firebaseapp.com",    // <-- GANTI INI!
+            projectId: "zeta-rpg-12345",                     // <-- GANTI INI!
+            storageBucket: "zeta-rpg-12345.appspot.com",     // <-- GANTI INI!
+            messagingSenderId: "123456789012",               // <-- GANTI INI!
+            appId: "1:123456789012:web:abc123def456"         // <-- GANTI INI!
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        console.log("✅ Firebase initialized!");
+        console.log("✅ API Key used:", firebaseConfig.apiKey.substring(0, 10) + "...");
+        
+        // DOM Elements
+        const authContainer = document.getElementById('auth-container');
+        const dashboard = document.getElementById('dashboard');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const authMessage = document.getElementById('auth-message');
+        const toast = document.getElementById('toast');
+        
+        // Helper Functions
+        function showToast(message, type = 'info') {
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+        
+        function showDashboardUI() {
+            authContainer.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+        }
+        
+        function showAuthUI() {
+            authContainer.classList.remove('hidden');
+            dashboard.classList.add('hidden');
+        }
+        
+        // LOAD USER DATA
+        async function loadUserData(userId) {
+            try {
+                const doc = await db.collection('users').doc(userId).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('level').innerText = data.level || 1;
+                    document.getElementById('exp').innerText = data.exp || 0;
+                    document.getElementById('knowledge').innerText = data.knowledge || 0;
+                    document.getElementById('strength').innerText = data.strength || 0;
+                    
+                    const expPercent = ((data.exp || 0) / 100) * 100;
+                    document.getElementById('exp-bar').style.width = `${expPercent}%`;
+                    document.getElementById('knowledge-bar').style.width = `${data.knowledge || 0}%`;
+                    document.getElementById('strength-bar').style.width = `${data.strength || 0}%`;
+                }
+            } catch (err) {
+                console.error("Error loading user data:", err);
+            }
+        }
+        
+        // ADD TASK
+        async function addTask() {
+            const title = prompt("Quest title:");
+            if (!title) return;
+            
+            const exp = parseInt(prompt("EXP reward (10-100):", "50"));
+            if (isNaN(exp) || exp < 10 || exp > 100) {
+                showToast("EXP must be between 10-100!", "error");
+                return;
+            }
+            
+            const punishment = prompt("Punishment if failed:");
+            
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            const taskData = {
+                title: title,
+                desc: "",
+                date: new Date().toISOString().split('T')[0],
+                time: new Date().toLocaleTimeString(),
+                category: "other",
+                exp: exp,
+                punishment: punishment || "No punishment",
+                status: "pending",
+                createdAt: new Date()
+            };
+            
+            await db.collection('users').doc(user.uid).collection('tasks').add(taskData);
+            showToast(`✅ Quest "${title}" added! +${exp} EXP`);
+            loadTasks(user.uid);
+        }
+        
+        // LOAD TASKS
+        async function loadTasks(userId) {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const snapshot = await db.collection('users').doc(userId).collection('tasks')
+                .where('date', '==', todayStr)
+                .get();
+            
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+            
+            snapshot.forEach(doc => {
+                const task = { id: doc.id, ...doc.data() };
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task-card';
+                taskDiv.innerHTML = `
+                    <strong>${task.title}</strong> <span style="color:#a855f7;">+${task.exp} EXP</span>
+                    <div class="task-meta">⏰ ${task.time} | ⚠️ ${task.punishment}</div>
+                    <button class="complete-btn" data-id="${task.id}" data-exp="${task.exp}" data-category="${task.category}">✓ Complete</button>
+                `;
+                
+                const completeBtn = taskDiv.querySelector('.complete-btn');
+                completeBtn.addEventListener('click', () => completeTask(task.id, task.exp, task.category));
+                
+                taskList.appendChild(taskDiv);
+            });
+        }
+        
+        // COMPLETE TASK
+        async function completeTask(taskId, expGain, category) {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            await db.collection('users').doc(user.uid).collection('tasks').doc(taskId).update({
+                status: 'completed',
+                completedAt: new Date()
+            });
+            
+            // Update EXP
+            const userRef = db.collection('users').doc(user.uid);
+            const userDoc = await userRef.get();
+            let currentExp = userDoc.data().exp || 0;
+            let currentLevel = userDoc.data().level || 1;
+            let newExp = currentExp + expGain;
+            let newLevel = currentLevel;
+            
+            while (newExp >= 100) {
+                newExp -= 100;
+                newLevel++;
+                showToast(`⚡ LEVEL UP! Now level ${newLevel}! ⚡`, "success");
+            }
+            
+            await userRef.update({ exp: newExp, level: newLevel });
+            
+            // Update ability based on category
+            let abilityField = '';
+            if (category === 'study') abilityField = 'knowledge';
+            else if (category === 'exercise') abilityField = 'strength';
+            else abilityField = 'knowledge';
+            
+            if (abilityField) {
+                const currentAbility = userDoc.data()[abilityField] || 0;
+                const newAbility = Math.min(currentAbility + expGain, 100);
+                await userRef.update({ [abilityField]: newAbility });
+            }
+            
+            showToast(`✅ Quest completed! +${expGain} EXP`);
+            loadUserData(user.uid);
+            loadTasks(user.uid);
+        }
+        
+        // LOGIN
+        async function handleLogin() {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            
+            if (!email || !password) {
+                authMessage.innerHTML = '<span class="error">⚠️ Isi email dan password!</span>';
+                return;
+            }
+            
+            authMessage.innerHTML = '<span class="info">📡 Login...</span>';
+            
+            try {
+                const userCred = await auth.signInWithEmailAndPassword(email, password);
+                authMessage.innerHTML = '<span class="success">✅ Login sukses!</span>';
+                showToast('🎉 Selamat datang, Warrior!');
+                showDashboardUI();
+                loadUserData(userCred.user.uid);
+                loadTasks(userCred.user.uid);
+            } catch (err) {
+                console.error("Login error:", err);
+                let errorMsg = err.message;
+                if (err.code === 'auth/user-not-found') errorMsg = 'Email belum terdaftar! Register dulu.';
+                if (err.code === 'auth/wrong-password') errorMsg = 'Password salah!';
+                if (err.code === 'auth/invalid-api-key') errorMsg = 'API Key salah! Cek config Firebase.';
+                authMessage.innerHTML = `<span class="error">❌ ${errorMsg}</span>`;
+                showToast(errorMsg, "error");
+            }
+        }
+        
+        // REGISTER
+        async function handleRegister() {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            
+            if (!email || !password) {
+                authMessage.innerHTML = '<span class="error">⚠️ Isi email dan password!</span>';
+                return;
+            }
+            
+            if (password.length < 6) {
+                authMessage.innerHTML = '<span class="error">⚠️ Password minimal 6 karakter!</span>';
+                return;
+            }
+            
+            authMessage.innerHTML = '<span class="info">📡 Register...</span>';
+            
+            try {
+                const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                
+                await db.collection('users').doc(userCred.user.uid).set({
+                    level: 1,
+                    exp: 0,
+                    knowledge: 0,
+                    strength: 0,
+                    wealth: 0,
+                    balance: 0,
+                    createdAt: new Date()
+                });
+                
+                authMessage.innerHTML = '<span class="success">✅ Register sukses!</span>';
+                showToast('✨ Character created! Welcome to Zeta RPG!');
+                showDashboardUI();
+                loadUserData(userCred.user.uid);
+                loadTasks(userCred.user.uid);
+            } catch (err) {
+                console.error("Register error:", err);
+                let errorMsg = err.message;
+                if (err.code === 'auth/email-already-in-use') errorMsg = 'Email sudah terdaftar! Coba login.';
+                if (err.code === 'auth/invalid-api-key') errorMsg = 'API Key salah! Cek config Firebase.';
+                authMessage.innerHTML = `<span class="error">❌ ${errorMsg}</span>`;
+                showToast(errorMsg, "error");
+            }
+        }
+        
+        // LOGOUT
+        async function handleLogout() {
+            await auth.signOut();
+            showToast('👋 See you next time!');
+            showAuthUI();
+        }
+        
+        // EVENT LISTENERS
+        loginBtn.addEventListener('click', handleLogin);
+        registerBtn.addEventListener('click', handleRegister);
+        logoutBtn.addEventListener('click', handleLogout);
+        
+        const addTaskBtn = document.getElementById('add-task-btn');
+        if (addTaskBtn) {
+            addTaskBtn.addEventListener('click', addTask);
+        }
+        
+        // AUTH STATE
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                showDashboardUI();
+                loadUserData(user.uid);
+                loadTasks(user.uid);
+            } else {
+                showAuthUI();
+            }
+        });
+        
+        console.log("🚀 App ready!");
+    </script>
 </body>
 </html>
